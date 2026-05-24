@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, Clock3, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import api, { tokenStorage } from "../api/axios.js";
 import Navbar from "../components/Navbar.jsx";
@@ -9,19 +9,16 @@ const columns = [
   {
     key: "TODO",
     title: "TODO",
-    icon: Circle,
     headerClass: "border-slate-300 bg-slate-100 text-slate-700"
   },
   {
     key: "IN_PROGRESS",
     title: "IN PROGRESS",
-    icon: Clock3,
     headerClass: "border-blue-200 bg-blue-50 text-blue-700"
   },
   {
     key: "DONE",
     title: "DONE",
-    icon: CheckCircle2,
     headerClass: "border-emerald-200 bg-emerald-50 text-emerald-700"
   }
 ];
@@ -171,14 +168,12 @@ function Dashboard() {
         ) : (
           <section className="mt-6 grid gap-4 lg:grid-cols-3">
             {columns.map((column) => {
-              const Icon = column.icon;
               const columnTasks = groupedTasks[column.key] || [];
 
               return (
                 <div key={column.key} className="min-h-[420px] rounded-lg border border-slate-200/80 bg-white/55 p-3">
                   <div className={`mb-3 flex items-center justify-between rounded-lg border px-3 py-2 ${column.headerClass}`}>
-                    <div className="flex min-w-0 items-center gap-2">
-                      <Icon size={18} />
+                    <div className="flex min-w-0 items-center">
                       <h2 className="truncate text-sm font-extrabold">{column.title}</h2>
                     </div>
                     <span className="rounded-full bg-white/80 px-2 py-0.5 text-xs font-bold">{columnTasks.length}</span>
