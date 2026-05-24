@@ -1,0 +1,398 @@
+Topshiriq: Fullstack Task Manager
+
+Stack: Express, MongoDB, Mongoose, JWT, Bcrypt, React, Tailwind CSS
+
+
+Vazifa
+------
+Foydalanuvchilar ro'yxatdan o'tib, o'z vazifalarini yaratadigan, tahrirlayan va boshqaradigan to'liq fullstack ilova yarating.
+
+
+Loyiha Tuzilmasi
+----------------
+project/
+├── backend/
+│   ├── src/
+│   │   ├── models/
+│   │   │   ├── user.model.js
+│   │   │   └── task.model.js
+│   │   ├── controllers/
+│   │   │   ├── auth.controller.js
+│   │   │   └── task.controller.js
+│   │   ├── routes/
+│   │   │   ├── auth.routes.js
+│   │   │   └── task.routes.js
+│   │   ├── middlewares/
+│   │   │   ├── auth.middleware.js
+│   │   │   └── errorHandler.js
+│   │   └── app.js
+│   └── .env
+│
+└── frontend/
+    ├── src/
+    │   ├── pages/
+    │   │   ├── Login.jsx
+    │   │   ├── Register.jsx
+    │   │   └── Dashboard.jsx
+    │   ├── components/
+    │   │   ├── Navbar.jsx
+    │   │   ├── TaskCard.jsx
+    │   │   ├── TaskModal.jsx
+    │   │   └── PrivateRoute.jsx
+    │   ├── api/
+    │   │   └── axios.js
+    │   └── App.jsx
+    └── index.html
+
+
+Modellar
+--------
+
+User:
+  - id
+  - fullName (string)
+  - email (unique)
+  - passwordHash (string)
+  - createdAt
+
+Task:
+  - id
+  - userId (ref: User)
+  - title (string)
+  - description (string, optional)
+  - status (TODO | IN_PROGRESS | DONE)
+  - priority (LOW | MEDIUM | HIGH)
+  - dueDate (date, optional)
+  - createdAt
+  - updatedAt
+
+
+Backend - Auth Endpointlari
+----------------------------
+
+POST /api/auth/register
+
+  Request:
+    {
+      "fullName": "Vali Karimov",
+      "email": "vali@gmail.com",
+      "password": "Secret123"
+    }
+
+  Response (201):
+    {
+      "data": {
+        "_id": "64f1a...",
+        "fullName": "Ali Karimov",
+        "email": "ali@gmail.com"
+      },
+      "tokens": {
+        "accessToken": "eyJ...",
+        "refreshToken": "eyJ..."
+      },
+      "message": "Muvaffaqiyatli ro'yxatdan o'tdingiz"
+    }
+
+---
+
+POST /api/auth/login
+
+  Request:
+    {
+      "email": "ali@gmail.com",
+      "password": "Secret123"
+    }
+
+  Response (200):
+    {
+      "data": {
+        "_id": "64f1a...",
+        "fullName": "Ali Karimov",
+        "email": "ali@gmail.com"
+      },
+      "tokens": {
+        "accessToken": "eyJ...",
+        "refreshToken": "eyJ..."
+      }
+    }
+
+---
+
+POST /api/auth/refresh
+
+  Request:
+    {
+      "refreshToken": "eyJ..."
+    }
+
+  Response (200):
+    {
+      "tokens": {
+        "accessToken": "eyJ...",
+        "refreshToken": "eyJ..."
+      }
+    }
+
+---
+
+POST /api/auth/logout
+
+  Header: Authorization: Bearer <accessToken>
+
+  Response (200):
+    {
+      "message": "Tizimdan chiqdingiz"
+    }
+
+
+Backend - Task Endpointlari
+-----------------------------
+Barcha task endpointlari Header da token talab qiladi:
+  Authorization: Bearer <accessToken>
+
+---
+
+GET /api/tasks
+
+  Response (200):
+    {
+      "data": [
+        {
+          "_id": "64f2a...",
+          "title": "NestJS o'rganish",
+          "description": "Dokumentatsiyani o'qish",
+          "status": "IN_PROGRESS",
+          "priority": "HIGH",
+          "dueDate": "2024-02-01T00:00:00.000Z",
+          "createdAt": "2024-01-15T10:00:00.000Z"
+        }
+      ]
+    }
+
+---
+
+GET /api/tasks/:id
+
+  Response (200):
+    {
+      "data": {
+        "_id": "64f2a...",
+        "title": "NestJS o'rganish",
+        "description": "Dokumentatsiyani o'qish",
+        "status": "IN_PROGRESS",
+        "priority": "HIGH",
+        "dueDate": "2024-02-01T00:00:00.000Z",
+        "createdAt": "2024-01-15T10:00:00.000Z"
+      }
+    }
+
+---
+
+POST /api/tasks
+
+  Request:
+    {
+      "title": "React o'rganish",
+      "description": "Hooks va Context o'rganish",
+      "priority": "MEDIUM",
+      "dueDate": "2024-02-15"
+    }
+
+  Response (201):
+    {
+      "data": {
+        "_id": "64f2b...",
+        "title": "React o'rganish",
+        "description": "Hooks va Context o'rganish",
+        "status": "TODO",
+        "priority": "MEDIUM",
+        "dueDate": "2024-02-15T00:00:00.000Z",
+        "createdAt": "2024-01-15T11:00:00.000Z"
+      },
+      "message": "Vazifa muvaffaqiyatli yaratildi"
+    }
+
+---
+
+PUT /api/tasks/:id
+
+  Request:
+    {
+      "title": "React o'rganish (yangilangan)",
+      "status": "IN_PROGRESS",
+      "priority": "HIGH"
+    }
+
+  Response (200):
+    {
+      "data": {
+        "_id": "64f2b...",
+        "title": "React o'rganish (yangilangan)",
+        "status": "IN_PROGRESS",
+        "priority": "HIGH",
+        "updatedAt": "2024-01-15T12:00:00.000Z"
+      },
+      "message": "Vazifa muvaffaqiyatli yangilandi"
+    }
+
+---
+
+DELETE /api/tasks/:id
+
+  Response (200):
+    {
+      "message": "Vazifa muvaffaqiyatli o'chirildi"
+    }
+
+---
+
+PATCH /api/tasks/:id/status
+
+  Request:
+    {
+      "status": "DONE"
+    }
+
+  Response (200):
+    {
+      "data": {
+        "_id": "64f2b...",
+        "status": "DONE"
+      },
+      "message": "Vazifa holati yangilandi"
+    }
+
+
+Xato Holatlari
+--------------
+
+401 - Token yo'q:
+  {
+    "statusCode": 401,
+    "message": "Tizimga kiring"
+  }
+
+401 - Token muddati o'tgan:
+  {
+    "statusCode": 401,
+    "message": "Token muddati tugagan"
+  }
+
+403 - Begona vazifa:
+  {
+    "statusCode": 403,
+    "message": "Bu vazifaga ruxsatingiz yo'q"
+  }
+
+404 - Topilmadi:
+  {
+    "statusCode": 404,
+    "message": "Vazifa topilmadi"
+  }
+
+409 - Email takror:
+  {
+    "statusCode": 409,
+    "message": "Bu email allaqachon ro'yxatdan o'tgan"
+  }
+
+
+Frontend - Sahifalar
+---------------------
+
+1. Register sahifasi - /register
+
+To'liq ism, email va parol kiritish maydonlari bo'lsin.
+Pastda "Akkauntingiz bormi? Kirish" havolasi bo'lsin.
+
+2. Login sahifasi - /login
+
+Email va parol kiritish maydonlari bo'lsin.
+Pastda "Akkauntingiz yo'qmi? Ro'yxatdan o'ting" havolasi bo'lsin.
+
+3. Dashboard sahifasi - /dashboard
+
+Yuqorida Navbar bo'lsin: foydalanuvchi ismi va chiqish tugmasi.
+
+Vazifalar 3 ta ustunda joylashsin:
+  TODO         IN_PROGRESS        DONE
+  --------     -----------        ----
+  Vazifa 1     Vazifa 3           Vazifa 5
+  Vazifa 2     Vazifa 4
+
+Har bir vazifa kartochkasida quyidagilar bo'lsin:
+  - Sarlavha
+  - Muhimlik darajasi (rangli)
+  - Muddat (agar berilgan bo'lsa)
+  - Tahrirlash tugmasi
+  - O'chirish tugmasi
+  - Status o'zgartirish tugmasi
+
+Yangi vazifa qo'shish tugmasi sahifa yuqorisida bo'lsin.
+
+4. Task Modal
+
+Vazifa yaratish va tahrirlash bitta modal orqali ishlashi kerak.
+Modal ichida:
+  - Sarlavha (majburiy)
+  - Tavsif (ixtiyoriy)
+  - Muhimlik darajasi: LOW | MEDIUM | HIGH
+  - Muddat (ixtiyoriy)
+  - Saqlash va Bekor qilish tugmalari
+
+
+Frontend Talablari
+------------------
+
+Himoya:
+  - Login qilmagan foydalanuvchi dashboard ga kira olmasin - PrivateRoute bilan himoyalang
+  - Login yoki Register sahifasiga kirgan foydalanuvchi agar login bo'lgan bo'lsa dashboard ga yo'naltirilsin
+  - Token localStorage da saqlansin
+
+Dashboard:
+  - O'chirishda foydalanuvchidan tasdiqlash so'ralsin
+  - Status o'zgartirish kartochka ichidagi tugma orqali ishlashi kerak
+  - Yangi vazifa yaratish va tahrirlash bitta modal orqali ishlashi kerak
+
+Tailwind ranglari:
+  Muhimlik darajasi:
+    HIGH   - qizil rang
+    MEDIUM - sariq rang
+    LOW    - yashil rang
+
+  Ustun ranglari:
+    TODO        - kulrang
+    IN_PROGRESS - ko'k rang
+    DONE        - yashil rang
+
+axios.js faylida:
+  - Har bir so'rovga token avtomatik qo'shilsin
+  - Token muddati o'tsa refresh qilsin
+  - Refresh ham ishlamasa login sahifasiga yuborsin
+
+
+Environment Variables
+---------------------
+
+Baholash
+--------
+
+Backend:
+  Modellar                          10 ball
+  JWT Auth (Access + Refresh)       15 ball
+  Bcrypt                             5 ball
+  Task CRUD va owner tekshiruvi     15 ball
+  Global Error Handler               5 ball
+
+Frontend:
+  Login va Register sahifalari      10 ball
+  PrivateRoute                       5 ball
+  Dashboard (3 ustun)               15 ball
+  Task Modal                        10 ball
+  Axios interceptor                 10 ball
+
+JAMI:                              100 ball
+
+
+Avval backendni tugatib Postman da to'liq test qiling. Keyin frontendni boshlang. Deploy qilish shart!
+
