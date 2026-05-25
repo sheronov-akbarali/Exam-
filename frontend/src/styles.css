@@ -17,7 +17,7 @@ body {
 }
 
 .dark body {
-  background: #020617;
+  background: #07152f;
   color: #f8fafc;
 }
 
@@ -41,8 +41,5 @@ button:disabled {
 }
 
 .dark .app-shell {
-  background:
-    radial-gradient(circle at 18% 12%, rgba(20, 184, 166, 0.16), transparent 32%),
-    radial-gradient(circle at 82% 4%, rgba(59, 130, 246, 0.12), transparent 34%),
-    linear-gradient(135deg, #020617 0%, #0f172a 48%, #111827 100%);
+  background: #07152f;
 }
