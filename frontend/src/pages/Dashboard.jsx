@@ -1,4 +1,4 @@
-import { Inbox, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import api, { tokenStorage } from "../api/axios.js";
 import Navbar from "../components/Navbar.jsx";
@@ -185,7 +185,6 @@ function Dashboard({ isDark, onToggleTheme }) {
                 <div key={column.key} className="min-h-[420px] rounded-lg border border-slate-200/80 bg-white/70 p-4 shadow-sm dark:border-slate-700/60 dark:bg-[#081832] dark:shadow-none">
                   <div className="mb-4 flex items-center justify-between">
                     <div className="flex min-w-0 items-center gap-2">
-                      <span className={`h-2.5 w-2.5 rounded-full ${column.accentClass}`} />
                       <h2 className={`truncate text-sm font-extrabold ${column.headerClass}`}>{column.title}</h2>
                     </div>
                     <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600 dark:bg-[#0d2142] dark:text-slate-200">
@@ -206,7 +205,6 @@ function Dashboard({ isDark, onToggleTheme }) {
 
                     {!columnTasks.length ? (
                       <div className="flex min-h-32 flex-col items-center justify-center rounded-lg border border-dashed border-slate-300 bg-white/55 px-4 py-8 text-center text-sm font-medium text-slate-500 dark:border-slate-700/80 dark:bg-[#0b1d3a] dark:text-slate-400">
-                        <Inbox className="mb-2 text-slate-400 dark:text-slate-500" size={22} />
                         Hozircha vazifa yo'q
                       </div>
                     ) : null}
