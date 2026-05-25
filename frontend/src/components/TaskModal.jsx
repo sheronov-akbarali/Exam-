@@ -8,6 +8,9 @@ const initialForm = {
   dueDate: ""
 };
 
+const inputClass =
+  "mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-teal-950";
+
 function toDateInputValue(date) {
   if (!date) return "";
   return new Date(date).toISOString().slice(0, 10);
@@ -68,7 +71,7 @@ function TaskModal({ open, task, loading, onClose, onSubmit }) {
               value={form.title}
               onChange={handleChange}
               required
-              className="mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-teal-950"
+              className={inputClass}
               placeholder="Masalan: React hooks o'rganish"
             />
           </label>
@@ -92,7 +95,7 @@ function TaskModal({ open, task, loading, onClose, onSubmit }) {
                 name="priority"
                 value={form.priority}
                 onChange={handleChange}
-                className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:ring-teal-950"
+                className={`${inputClass} bg-white`}
               >
                 <option value="LOW">Unchalik emas</option>
                 <option value="MEDIUM">Muhim</option>
@@ -107,7 +110,7 @@ function TaskModal({ open, task, loading, onClose, onSubmit }) {
                 name="dueDate"
                 value={form.dueDate}
                 onChange={handleChange}
-                className="mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-950 outline-none transition focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:ring-teal-950"
+                className={inputClass}
               />
             </label>
           </div>

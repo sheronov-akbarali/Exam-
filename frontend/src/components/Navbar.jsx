@@ -1,4 +1,5 @@
-import { LogOut, Moon, Plus, Search, Sun } from "lucide-react";
+import { LogOut, Plus, Search } from "lucide-react";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 function Navbar({ user, onLogout, onCreate, search, setSearch, isDark, onToggleTheme }) {
   return (
@@ -11,14 +12,7 @@ function Navbar({ user, onLogout, onCreate, search, setSearch, isDark, onToggleT
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={onToggleTheme}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800 dark:focus:ring-slate-700"
-              type="button"
-              title={isDark ? "Light mode" : "Dark mode"}
-            >
-              {isDark ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
+            <ThemeToggle isDark={isDark} onClick={onToggleTheme} />
             <button
               onClick={onCreate}
               className="inline-flex h-10 items-center gap-2 rounded-lg bg-teal-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-200"

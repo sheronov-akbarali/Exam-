@@ -1,7 +1,10 @@
-import { Moon, Sun } from "lucide-react";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import api, { tokenStorage } from "../api/axios.js";
+import ThemeToggle from "../components/ThemeToggle.jsx";
+
+const inputClass =
+  "mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-teal-950";
 
 function Register({ isDark, onToggleTheme }) {
   const navigate = useNavigate();
@@ -32,14 +35,7 @@ function Register({ isDark, onToggleTheme }) {
 
   return (
     <main className="app-shell flex min-h-screen items-center justify-center px-4 py-10">
-      <button
-        onClick={onToggleTheme}
-        className="fixed right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800 dark:focus:ring-slate-700"
-        type="button"
-        title={isDark ? "Light mode" : "Dark mode"}
-      >
-        {isDark ? <Sun size={18} /> : <Moon size={18} />}
-      </button>
+      <ThemeToggle isDark={isDark} onClick={onToggleTheme} className="fixed right-4 top-4" />
 
       <section className="w-full max-w-md rounded-lg border border-white/70 bg-white/90 p-6 shadow-soft backdrop-blur dark:border-slate-800 dark:bg-slate-900/90 dark:shadow-none">
         <div className="mb-8">
@@ -56,7 +52,7 @@ function Register({ isDark, onToggleTheme }) {
               value={form.fullName}
               onChange={(event) => setForm({ ...form, fullName: event.target.value })}
               required
-              className="mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-teal-950"
+              className={inputClass}
               placeholder="Akbarali Sheronov"
             />
           </label>
@@ -68,7 +64,7 @@ function Register({ isDark, onToggleTheme }) {
               value={form.email}
               onChange={(event) => setForm({ ...form, email: event.target.value })}
               required
-              className="mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-teal-950"
+              className={inputClass}
               placeholder="sheronovakbarali@gmail.com"
             />
           </label>
@@ -81,7 +77,7 @@ function Register({ isDark, onToggleTheme }) {
               onChange={(event) => setForm({ ...form, password: event.target.value })}
               minLength="6"
               required
-              className="mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-teal-950"
+              className={inputClass}
               placeholder="Secret123 deb yozibsiz"
             />
           </label>
