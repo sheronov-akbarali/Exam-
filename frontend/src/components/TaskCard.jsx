@@ -31,7 +31,7 @@ function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
   const dueDate = formatDate(task.dueDate);
 
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900 dark:shadow-none">
+    <article className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-soft dark:border-slate-700/70 dark:bg-[#0b1d3a] dark:shadow-none">
       <div className="flex items-start justify-between gap-3">
         <h3 className="min-w-0 text-base font-bold leading-6 text-slate-950 dark:text-white">{task.title}</h3>
         <span className={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-bold ${priorityStyles[task.priority]}`}>
@@ -64,7 +64,7 @@ function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
           type="button"
           title="Tahrirlash"
         >
-          Edit
+          Tahrir
         </button>
         <button
           onClick={() => onDelete(task)}
@@ -72,7 +72,7 @@ function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
           type="button"
           title="O'chirish"
         >
-          Delete
+          O'chirish
         </button>
       </div>
     </article>

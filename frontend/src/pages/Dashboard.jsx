@@ -1,4 +1,4 @@
-import { Loader2 } from "lucide-react";
+import { Inbox, Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import api, { tokenStorage } from "../api/axios.js";
 import Navbar from "../components/Navbar.jsx";
@@ -9,17 +9,20 @@ const columns = [
   {
     key: "TODO",
     title: "TODO",
-    headerClass: "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+    accentClass: "bg-slate-400",
+    headerClass: "text-slate-700 dark:text-slate-200"
   },
   {
     key: "IN_PROGRESS",
     title: "IN PROGRESS",
-    headerClass: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/50 dark:text-blue-300"
+    accentClass: "bg-blue-500",
+    headerClass: "text-blue-700 dark:text-blue-300"
   },
   {
     key: "DONE",
     title: "DONE",
-    headerClass: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-300"
+    accentClass: "bg-emerald-500",
+    headerClass: "text-emerald-700 dark:text-emerald-300"
   }
 ];
 
@@ -156,8 +159,8 @@ function Dashboard({ isDark, onToggleTheme }) {
         onToggleTheme={onToggleTheme}
       />
 
-      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <main className="mx-auto max-w-6xl px-4 py-7 sm:px-6 lg:px-8">
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Stat label="Jami" value={stats.total} />
           <Stat label="Jarayonda" value={stats.active} />
           <Stat label="Bajarilgan" value={stats.done} />
@@ -174,17 +177,20 @@ function Dashboard({ isDark, onToggleTheme }) {
             Vazifalar yuklanmoqda...
           </div>
         ) : (
-          <section className="mt-6 grid gap-4 lg:grid-cols-3">
+          <section className="mt-6 grid gap-5 lg:grid-cols-3">
             {columns.map((column) => {
               const columnTasks = groupedTasks[column.key] || [];
 
               return (
-                <div key={column.key} className="min-h-[420px] rounded-lg border border-slate-200/80 bg-white/55 p-3 dark:border-slate-800/80 dark:bg-slate-950/45">
-                  <div className={`mb-3 flex items-center justify-between rounded-lg border px-3 py-2 ${column.headerClass}`}>
-                    <div className="flex min-w-0 items-center">
-                      <h2 className="truncate text-sm font-extrabold">{column.title}</h2>
+                <div key={column.key} className="min-h-[420px] rounded-lg border border-slate-200/80 bg-white/70 p-4 shadow-sm dark:border-slate-700/60 dark:bg-[#081832] dark:shadow-none">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex min-w-0 items-center gap-2">
+                      <span className={`h-2.5 w-2.5 rounded-full ${column.accentClass}`} />
+                      <h2 className={`truncate text-sm font-extrabold ${column.headerClass}`}>{column.title}</h2>
                     </div>
-                    <span className="rounded-full bg-white/80 px-2 py-0.5 text-xs font-bold dark:bg-slate-950/70">{columnTasks.length}</span>
+                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600 dark:bg-[#0d2142] dark:text-slate-200">
+                      {columnTasks.length}
+                    </span>
                   </div>
 
                   <div className="space-y-3">
@@ -199,8 +205,9 @@ function Dashboard({ isDark, onToggleTheme }) {
                     ))}
 
                     {!columnTasks.length ? (
-                      <div className="rounded-lg border border-dashed border-slate-300 bg-white/60 px-4 py-10 text-center text-sm font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-900/50 dark:text-slate-400">
-                        Bu ustunda vazifa yo'q
+                      <div className="flex min-h-32 flex-col items-center justify-center rounded-lg border border-dashed border-slate-300 bg-white/55 px-4 py-8 text-center text-sm font-medium text-slate-500 dark:border-slate-700/80 dark:bg-[#0b1d3a] dark:text-slate-400">
+                        <Inbox className="mb-2 text-slate-400 dark:text-slate-500" size={22} />
+                        Hozircha vazifa yo'q
                       </div>
                     ) : null}
                   </div>
@@ -227,7 +234,7 @@ function Dashboard({ isDark, onToggleTheme }) {
 
 function Stat({ label, value }) {
   return (
-    <div className="rounded-lg border border-white/80 bg-white/80 px-4 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+    <div className="rounded-lg border border-white/80 bg-white/85 px-4 py-4 shadow-sm dark:border-slate-700/60 dark:bg-[#081832] dark:shadow-none">
       <p className="text-xs font-bold uppercase tracking-normal text-slate-500 dark:text-slate-400">{label}</p>
       <p className="mt-2 text-3xl font-extrabold text-slate-950 dark:text-white">{value}</p>
     </div>

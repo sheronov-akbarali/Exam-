@@ -1,7 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 
 const baseClass =
-  "inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800 dark:focus:ring-slate-700";
+  "inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700/80 dark:bg-[#0b1d3a] dark:text-slate-100 dark:hover:bg-[#10284d] dark:focus:ring-slate-700";
 
 function ThemeToggle({ isDark, onClick, className = "" }) {
   return (
