@@ -9,21 +9,21 @@ const columns = [
   {
     key: "TODO",
     title: "TODO",
-    headerClass: "border-slate-300 bg-slate-100 text-slate-700"
+    headerClass: "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
   },
   {
     key: "IN_PROGRESS",
     title: "IN PROGRESS",
-    headerClass: "border-blue-200 bg-blue-50 text-blue-700"
+    headerClass: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/50 dark:text-blue-300"
   },
   {
     key: "DONE",
     title: "DONE",
-    headerClass: "border-emerald-200 bg-emerald-50 text-emerald-700"
+    headerClass: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-300"
   }
 ];
 
-function Dashboard() {
+function Dashboard({ isDark, onToggleTheme }) {
   const [tasks, setTasks] = useState([]);
   const [user, setUser] = useState(() => {
     try {
@@ -146,7 +146,15 @@ function Dashboard() {
 
   return (
     <div className="app-shell min-h-screen">
-      <Navbar user={user} onLogout={handleLogout} onCreate={openCreate} search={search} setSearch={setSearch} />
+      <Navbar
+        user={user}
+        onLogout={handleLogout}
+        onCreate={openCreate}
+        search={search}
+        setSearch={setSearch}
+        isDark={isDark}
+        onToggleTheme={onToggleTheme}
+      />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -157,11 +165,11 @@ function Dashboard() {
         </section>
 
         {error ? (
-          <div className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</div>
+          <div className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-900 dark:bg-red-950/60 dark:text-red-300">{error}</div>
         ) : null}
 
         {loading ? (
-          <div className="mt-12 flex items-center justify-center gap-3 text-slate-600">
+          <div className="mt-12 flex items-center justify-center gap-3 text-slate-600 dark:text-slate-300">
             <Loader2 className="animate-spin" size={22} />
             Vazifalar yuklanmoqda...
           </div>
@@ -171,12 +179,12 @@ function Dashboard() {
               const columnTasks = groupedTasks[column.key] || [];
 
               return (
-                <div key={column.key} className="min-h-[420px] rounded-lg border border-slate-200/80 bg-white/55 p-3">
+                <div key={column.key} className="min-h-[420px] rounded-lg border border-slate-200/80 bg-white/55 p-3 dark:border-slate-800/80 dark:bg-slate-950/45">
                   <div className={`mb-3 flex items-center justify-between rounded-lg border px-3 py-2 ${column.headerClass}`}>
                     <div className="flex min-w-0 items-center">
                       <h2 className="truncate text-sm font-extrabold">{column.title}</h2>
                     </div>
-                    <span className="rounded-full bg-white/80 px-2 py-0.5 text-xs font-bold">{columnTasks.length}</span>
+                    <span className="rounded-full bg-white/80 px-2 py-0.5 text-xs font-bold dark:bg-slate-950/70">{columnTasks.length}</span>
                   </div>
 
                   <div className="space-y-3">
@@ -191,7 +199,7 @@ function Dashboard() {
                     ))}
 
                     {!columnTasks.length ? (
-                      <div className="rounded-lg border border-dashed border-slate-300 bg-white/60 px-4 py-10 text-center text-sm font-medium text-slate-500">
+                      <div className="rounded-lg border border-dashed border-slate-300 bg-white/60 px-4 py-10 text-center text-sm font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-900/50 dark:text-slate-400">
                         Bu ustunda vazifa yo'q
                       </div>
                     ) : null}
@@ -219,9 +227,9 @@ function Dashboard() {
 
 function Stat({ label, value }) {
   return (
-    <div className="rounded-lg border border-white/80 bg-white/80 px-4 py-4 shadow-sm">
-      <p className="text-xs font-bold uppercase tracking-normal text-slate-500">{label}</p>
-      <p className="mt-2 text-3xl font-extrabold text-slate-950">{value}</p>
+    <div className="rounded-lg border border-white/80 bg-white/80 px-4 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+      <p className="text-xs font-bold uppercase tracking-normal text-slate-500 dark:text-slate-400">{label}</p>
+      <p className="mt-2 text-3xl font-extrabold text-slate-950 dark:text-white">{value}</p>
     </div>
   );
 }
