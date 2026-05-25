@@ -357,7 +357,7 @@ Dashboard:
 Tailwind ranglari:
   Muhimlik darajasi:
     HIGH   - qizil rang
-    MEDIUM - sariq rang
+    MEDIUM - sariq range
     LOW    - yashil rang
 
   Ustun ranglari:
